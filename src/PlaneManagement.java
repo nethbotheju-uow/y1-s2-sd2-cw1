@@ -27,12 +27,22 @@ public class PlaneManagement {
             System.out.println("*************************************************\n");
 
             Scanner input = new Scanner(System.in);
-            System.out.print("Please select an option: ");
-            int option = input.nextInt();
-            while (option < 0 || option > 6) {
-                System.out.println("Please enter valid option.\n");
+
+            int option;
+            while(true) {
                 System.out.print("Please select an option: ");
-                option = input.nextInt();
+                if(input.hasNextInt()) {
+                    option = input.nextInt();
+                    if (option < 0 || option > 6) {
+                        System.out.println("Please enter valid option.\n");
+                        continue;
+                    }else{
+                        break;
+                    }
+                }else{
+                    System.out.println("Please enter an Integer value");
+                    input.next(); // consume the invalid input
+                }
             }
 
             switch (option) {
@@ -72,11 +82,11 @@ public class PlaneManagement {
             System.out.println("Your seat has been booked!");
 
             Scanner input = new Scanner(System.in);
-            System.out.println("Enter your name: ");
+            System.out.print("Enter your name: ");
             String name = input.next();
-            System.out.println("Enter your surename: ");
+            System.out.print("Enter your surename: ");
             String surename = input.next();
-            System.out.println("Enter your email: ");
+            System.out.print("Enter your email: ");
             String email = input.next();
 
             //Actual row letter and colomn number
@@ -171,29 +181,40 @@ public class PlaneManagement {
 
     public static int[] inputs(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter the row letter: ");
-        char row_letter = input.next().charAt(0);
-        row_letter = Character.toUpperCase(row_letter);
-        while(row_letter != 'A' && row_letter != 'B' && row_letter != 'C' && row_letter != 'D'){
-            System.out.println("Please enter valid row letter.\n");
+
+        char row_letter;
+        while(true){
             System.out.print("Enter the row letter: ");
-            row_letter = input.next().charAt(0);
+                row_letter = input.next().charAt(0);
+                row_letter = Character.toUpperCase(row_letter);
+                if(row_letter < 65 || row_letter > 68 ){
+                    System.out.println("Please enter valid row letter 'A' or 'B' or 'C' or 'D'.\n");
+                    continue;
+                }
+                else{
+                    break;
+                }
         }
 
-        System.out.print("Enter the column number: ");
-        int column_number = input.nextInt();
-        if(row_letter == 'A' || row_letter == 'D'){
-            while(column_number<=0 || column_number>14){
-                System.out.println("Please enter valid column number (This row has only 14 seats).\n");
-                System.out.print("Enter the column number: ");
+        int column_number;
+        while(true) {
+            System.out.print("Enter the column number: ");
+            if(input.hasNextInt()) {
                 column_number = input.nextInt();
-            }
-        }
-        else{
-            while(column_number<=0 || column_number>12){
-                System.out.println("Please enter valid column number (This row has only 12 seats).\n");
-                System.out.print("Enter the column number: ");
-                column_number = input.nextInt();
+                if (row_letter == 'A' || row_letter == 'D') {
+                    if (column_number <= 0 || column_number > 14) {
+                        System.out.println("Please enter valid column number (This row has only 14 seats).\n");
+                        continue;
+                    }
+                } else {
+                    if (column_number <= 0 || column_number > 12) {
+                        System.out.println("Please enter valid column number (This row has only 12 seats).\n");
+                        continue;
+                    }
+                }
+                break;
+            }else{
+                System.out.println("Please enter a Integer value! ");
             }
         }
 
